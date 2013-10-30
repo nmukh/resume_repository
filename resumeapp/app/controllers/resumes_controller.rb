@@ -1,4 +1,10 @@
 class ResumesController < ApplicationController
+  before_filter :prohibit_view
+
+  def prohibit_view
+    render :text => "Not authorized", :status => 403 if params[:id] && params[:id].to_i > 200
+  end
+
   def viewed
     resume = Resume.find(params[:id])
     @views = resume.view_histories
